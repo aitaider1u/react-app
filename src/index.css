@@ -41,4 +41,17 @@ body {
 }
 
 .counter-button-container{
-    justify-content:space-aroun
+    justify-content:space-around;
+    display: flex;
+    padding: 25px;
+}
+
+.container-button{
+    padding: 15px;
+    border-radius: 10%;
+    border: none;
+    border-color: bisque;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: rgba(188, 195, 198, 0.648);
+}

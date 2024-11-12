@@ -28,4 +28,14 @@ function Counter() {
     return (
         <div className="counter-container">
             <p className={`count-display ${getBackgroundColor()}`}>{count}</p>
-            <div classNa
+            <div className="counter-button-container">
+                <button className="container-button" onClick={decrement}>Decrement</button>
+                <button className="container-button" onClick={reset}>Reset</button>
+                <button className="container-button" onClick={increment}>Increment</button>
+            </div>
+        </div>
+    )
+
+}
+
+export default Counter;
