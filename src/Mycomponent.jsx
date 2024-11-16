@@ -1,30 +1,44 @@
+import { list } from "postcss";
 import React, {useState} from "react"
-
+import { useRef } from "react";
 function MyComponent(){
-    const [car, setCar] = useState({
-        year: 2024,
-        make: "Ford",
-        model: "Mustang"
-    });
+    const inputFoodRef = useRef();
+    
+    const [foods,setFoods] = useState(["apple","Orange","Banana"]);
+    
+    function handleAddFood(){
+        const newFood = inputFoodRef.current.value;
+        if(newFood === ""){
+            alert("Input value is empty");
+            return
+        }
+        inputFoodRef.current.value = "";
+        setFoods(f => [...f,newFood]);
+    }
 
-    function handleYearChange(event) {
-        setCar(c => ({...c,year: event.target.value}))    
+    function handleRemoveFood(indexToRemove){
+        setFoods(f => f.filter((_, i) => i !== indexToRemove));
     }
     
-    function handleMakeChange(event) {
-        setCar(c => ({...c,make: event.target.value}))    
-    }
-
-    function handleModelChange(event) {
-        setCar( c => ({...c,model: event.target.value}))    
-    }
-
     return(
+        
+
         <div>
-            <p>Your favorite car is : {car.year} {car.make} {car.model}</p>
-            <input type="number" value={car.year}  onChange={handleYearChange} />
-            <input type="text" value={car.make}  onChange={handleMakeChange} />
-            <input type="text" value={car.model}  onChange={handleModelChange} />
+            <label htmlFor=""> Your favorite food is : </label><input ref={inputFoodRef} type="text" /> <button onClick={handleAddFood}>Add it </button>
+            <h3>List of food</h3>
+            { foods.length > 0 
+            ?   
+                <ul>
+                {foods.map((item,index) => (
+                    <li key={index} onClick={() => handleRemoveFood(index)}>
+                        <p  >{item}</p>
+                    </li>
+                ))}
+                    <p>Number of item : {foods.length}</p>
+                </ul>
+            :
+                <div>The list is empty</div>
+            }
         </div>
     )
 }
