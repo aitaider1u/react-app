@@ -1,31 +1,67 @@
 import React, {useState} from "react"
+import { useRef } from 'react';
+
 
 function MyComponent(){
-    const [car, setCar] = useState({
+    const yearRef = useRef()
+    const makeRef = useRef()
+    const modelRef = useRef()
+
+    const [cars,setCars] = useState([]);
+
+
+    function handelAddNewCar(){
+        setCars(cs => [...cs,newCar])
+    }
+    
+    function handelRemoveNewCar(index){
+        setCars(cs => cs.filter((_, i) => index !=i ))
+    } 
+
+    const [newCar, setNewCar] = useState({
         year: 2024,
         make: "Ford",
         model: "Mustang"
     });
 
     function handleYearChange(event) {
-        setCar(c => ({...c,year: event.target.value}))    
+        setNewCar(c => ({...c,year: event.target.value}))    
     }
     
     function handleMakeChange(event) {
-        setCar(c => ({...c,make: event.target.value}))    
+        setNewCar(c => ({...c,make: event.target.value}))    
     }
 
     function handleModelChange(event) {
-        setCar( c => ({...c,model: event.target.value}))    
+        setNewCar( c => ({...c,model: event.target.value}))    
     }
 
     return(
-        <div>
-            <p>Your favorite car is : {car.year} {car.make} {car.model}</p>
-            <input type="number" value={car.year}  onChange={handleYearChange} />
-            <input type="text" value={car.make}  onChange={handleMakeChange} />
-            <input type="text" value={car.model}  onChange={handleModelChange} />
-        </div>
+        <>
+            <h2>Car List</h2>
+            {cars.length ? 
+                <div className="container-input">
+                    <ul>
+                        {cars.map((item, index) => (
+                            <li key={index}>
+                                {item.year}{" "}{item.model}{" "}{item.make}{" "}
+                                <button onClick={() => handelRemoveNewCar(index)}>Remove</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                : 
+                <p>List is empty</p>
+            }
+            <hr />
+            <div className="container-input" >
+                <input type="number" value={newCar.year} ref={yearRef} onChange={handleYearChange} />
+                <input type="text" value={newCar.make} ref={makeRef} onChange={handleMakeChange} />
+                <input type="text" value={newCar.model} ref={modelRef} onChange={handleModelChange} />
+                <button onClick={handelAddNewCar}> Add new cars</button>
+            </div>
+        </>
+        
     )
 }
 
